@@ -4,6 +4,11 @@ import NavBar from './components/shared/NavBar.vue'
 import About from '@/components/about/AboutMe.vue'
 import { useUIStore } from './stores/uiStore'
 import { computed } from 'vue'
+import Languages from './components/languages/Languages.vue'
+import Hobbies from './components/hobbies/Hobbies.vue'
+import ProjectStore from './components/projects/ProjectStore.vue'
+import Contact from './components/contact/Contact.vue'
+import Footer from './components/footer/Footer.vue'
 
 const uiStore = useUIStore()
 const themeClass = computed(() => (uiStore.isDarkMode ? 'dark-theme' : 'light-theme'))
@@ -15,8 +20,12 @@ const themeClass = computed(() => (uiStore.isDarkMode ? 'dark-theme' : 'light-th
     <NavBar />
     <main>
       <About />
-      <!-- Projects y Contact se agregarán más tarde -->
+      <Languages />
+      <Hobbies />
+      <ProjectStore />
+      <Contact />
     </main>
+    <Footer />
   </div>
 </template>
 
@@ -32,7 +41,7 @@ const themeClass = computed(() => (uiStore.isDarkMode ? 'dark-theme' : 'light-th
 /* Variables CSS para modo claro */
 .light-theme {
   --bg-primary: #f5f5f5;
-  --bg-secondary: #f1f5f9;
+  --bg-secondary: #eeeeee;
   --text-primary: #1e293b;
   --text-secondary: #111927;
   --accent-color: #3b82f6;

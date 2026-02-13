@@ -6,6 +6,34 @@ import profilePhoto from '@/assets/photoProf.jpeg';
 
 const uiStore = useUIStore();
 const t = computed(() => translations[uiStore.language as Language] || translations.en);
+
+// Función para scroll suave a secciones
+const scrollToSection = (sectionId: string) => {
+  const element = document.getElementById(sectionId);
+  if (element) {
+    element.scrollIntoView({ 
+      behavior: 'smooth',
+      block: 'start'
+    });
+  }
+};
+
+// Función para abrir CV según idioma
+const openCV = () => {
+  // Definir las rutas de los CVs según idioma
+  const cvPaths = {
+    en: '/CarlosMoralesCV_en.pdf',
+    es: '/CarlosMoralesCV_es.pdf',
+    de: '/CarlosMoralesCV_de.pdf'
+  };
+  
+  // Obtener el idioma actual o usar inglés por defecto
+  const currentLang = uiStore.language as keyof typeof cvPaths;
+  const cvUrl = cvPaths[currentLang] || cvPaths.en;
+  
+  // Abrir en nueva ventana
+  window.open(cvUrl, '_blank', 'noopener,noreferrer');
+};
 </script>
 
 <template>
@@ -26,15 +54,22 @@ const t = computed(() => translations[uiStore.language as Language] || translati
       </p>
 
       <div class="cta-container">
-        <button class="btn btn-primary">{{ t.btnWork }}</button>
-        <button class="btn btn-secondary">{{ t.btnContact }}</button>
+<button @click="scrollToSection('projects')" class="btn btn-primary">{{ t.btnWork }}</button>
+<button @click="scrollToSection('contact')" class="btn btn-primary">{{ t.btnContact }}</button>
+<button @click="openCV" class="btn btn-primary">{{ t.btnCV }}</button>
       </div>
 
-      <div class="social-links">
-        <i class="fab fa-github"></i>
-        <i class="fab fa-linkedin"></i>
-        <i class="fas fa-envelope"></i>
-      </div>
+<div class="social-links">
+  <a href="https://github.com/MoralesMortales" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+    <i class="fab fa-github"></i>
+  </a>
+  <a href="https://www.linkedin.com/in/carlos-morales-987974262" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+    <i class="fab fa-linkedin"></i>
+  </a>
+  <a href="https://mail.google.com/mail/?view=cm&fs=1&to=carlos52.7624@gmail.com" target="_blank" rel="noopener noreferrer" aria-label="Email">
+    <i class="fas fa-envelope"></i>
+  </a>
+</div>
 
       <div class="scroll-down">
         <i class="fas fa-arrow-down"></i>
@@ -134,21 +169,25 @@ const t = computed(() => translations[uiStore.language as Language] || translati
   transform: translateY(-2px);
 }
 
-.social-links { 
-  display: flex; 
-  gap: 25px; 
-  justify-content: center; 
-  font-size: 1.5rem; 
-  color: var(--text-secondary); 
-  margin-bottom: 30px; 
+.social-links {
+  display: flex;
+  gap: 25px;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: var(--text-secondary);
+  margin-bottom: 30px;
 }
 
-.social-links i {
-  cursor: pointer;
+.social-links a {
+  color: var(--text-secondary);
+  text-decoration: none;
   transition: color 0.3s ease, transform 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.social-links i:hover {
+.social-links a:hover {
   color: var(--accent-color);
   transform: scale(1.1);
 }
